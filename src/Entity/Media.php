@@ -19,6 +19,9 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $video = null;
 
+    #[ORM\ManyToOne(inversedBy: 'media')]
+    private ?Trick $trickId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Media
     public function setVideo(string $video): self
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getTrickId(): ?Trick
+    {
+        return $this->trickId;
+    }
+
+    public function setTrickId(?Trick $trickId): self
+    {
+        $this->trickId = $trickId;
 
         return $this;
     }

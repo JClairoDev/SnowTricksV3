@@ -20,6 +20,12 @@ class Commentary
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commentaries')]
+    private ?Trick $trickId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentaries')]
+    private ?User $userId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +51,30 @@ class Commentary
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTrickId(): ?Trick
+    {
+        return $this->trickId;
+    }
+
+    public function setTrickId(?Trick $trickId): self
+    {
+        $this->trickId = $trickId;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
