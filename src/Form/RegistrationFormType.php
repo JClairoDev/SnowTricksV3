@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Service\FileUploader;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -22,7 +23,8 @@ class RegistrationFormType extends AbstractType
             ->add('lastName')
             ->add('pseudo')
             ->add('avatar', FileType::class,[
-                'data_class'=>null
+                'data_class'=>null,
+                'mapped'=>false
             ])
             ->add('email')
             ->add('plainPassword', PasswordType::class, [
