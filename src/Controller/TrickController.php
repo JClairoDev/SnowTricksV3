@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Trick;
-use App\Entity\User;
 use App\Form\TrickType;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
@@ -13,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[Route('/trick')]
 class TrickController extends AbstractController
