@@ -18,10 +18,10 @@ class CategoryFixtures extends Fixture
         $manager->persist($grab);
         $this->addReference('grab',$grab);
 
-        $indy=new Category();
-        $indy->setName('indy');
-        $manager->persist($indy);
-        $this->addReference('indy',$indy);
+        $flip=new Category();
+        $flip->setName('flip');
+        $manager->persist($flip);
+        $this->addReference('flip',$flip);
 
         $manager->flush();
     }

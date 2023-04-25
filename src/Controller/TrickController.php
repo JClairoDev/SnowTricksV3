@@ -39,6 +39,7 @@ class TrickController extends AbstractController
 
             $video=$form->get('video')->getData();
             $photo=$form->get('photo')->getData();
+            //utilisation du service créé FileUploader pour l'enregistrement des medias
             if ($photo) {
                 $fileName = $fileUploader->upload($photo);
                 $media->setPictures($fileName);
@@ -46,10 +47,13 @@ class TrickController extends AbstractController
                 unlink($this->getParameter('uploads_path') . '/' . $media->getPictures());
                 $media->setPictures(null);
             }
+            //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
+            //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
             $media->setVideo($video);
             $trick->setUserId($this->getUser());
-            $mediaRepository->save($media, true);
             $trickRepository->save($trick, true);
+            $media->setTrickId($trick);
+            $mediaRepository->save($media, true);
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
