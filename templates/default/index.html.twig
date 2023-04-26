@@ -3,5 +3,12 @@
 {% block title %}SnowTricks{% endblock %}
 
 {% block body %}
-
+<h1>c'est la page d'accueil</h1>
+<section class="selectCategory">
+    <div>
+        {% for category in categories %}
+            <a href="{{ path('app_trick_show', {'id': category.id}) }}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
