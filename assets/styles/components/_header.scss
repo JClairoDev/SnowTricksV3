@@ -1,3 +1,20 @@
 .header{
-  background-color: green;
+  background-color: #AFA7FF;
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+
+  div{
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    a{
+      text-decoration: none;
+      font-size: x-large;
+    }
+
+  }
 }
