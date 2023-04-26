@@ -3,7 +3,11 @@
 <div class="header">
     <img src="{{ asset('uploads/LogoMakr-8DWPud.png') }}" alt="logo du site">
     <div>
-    <a href={{ path('app_login') }}>Login</a>
-    <a href="{{ path('app_register') }}">Sign In</a>
+        {% if app.user %}
+        <a href="{{ path('app_logout') }}">LOGOUT</a>
+        {% else %}
+    <a href={{ path('app_login') }}>LOGIN</a>
+    <a href="{{ path('app_register') }}">SIGN IN</a>
+        {% endif %}
     </div>
 </div>
