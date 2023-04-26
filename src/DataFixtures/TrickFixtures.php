@@ -27,7 +27,7 @@ class TrickFixtures extends Fixture
         $indy=new Trick();
         $indy->setName('indy');
         $indy->setCategoryId($grab);
-        $indy->setUserId($user->getDefaultFixture());
+        $indy->setUserId($user);
         $indy->setDescription('description dela figure indygrab');
         $manager->persist($indy);
 

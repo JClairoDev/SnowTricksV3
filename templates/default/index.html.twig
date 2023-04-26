@@ -3,12 +3,30 @@
 {% block title %}SnowTricks{% endblock %}
 
 {% block body %}
-<h1>c'est la page d'accueil</h1>
 <section class="selectCategory">
-    <div>
-        {% for category in categories %}
-            <a href="{{ path('app_trick_show', {'id': category.id}) }}">{{ category.name }}</a>
-        {% endfor %}
+
+    <div class="container">
+        <h1>
+            <a href="#menu">SNOW TRICKS</a>
+        </h1>
+
+        <div class="popover" id="menu">
+            <div class = 'content'>
+                <a href="#" class="close"></a>
+                <div class = 'nav'>
+                    <ul class = 'nav_list'>
+
+                        <div class = 'nav_list_item'>
+                            <li><a href="#">GRAB</a></li>
+                        </div>
+                        <div class = 'nav_list_item'>
+                            <li><a href="#">FLIP</a></li>
+                        </div
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 {% endblock %}
