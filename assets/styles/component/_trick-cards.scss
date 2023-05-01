@@ -1,4 +1,4 @@
-@use '../utils/variables';
+
 
 .list-tricks {
   display: grid;
@@ -146,20 +146,3 @@
   }
 }
 
-@media screen and (max-width: variables.$breakpoint-desktop) {
-  .list-tricks {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: variables.$breakpoint-tablet) {
-  .list-tricks {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (max-width: variables.$breakpoint-smartphone) {
-  .list-tricks {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}

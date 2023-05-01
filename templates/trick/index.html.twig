@@ -32,15 +32,15 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="list-tricks">
     {% for trick in tricks %}
         {% for media in medias  %}
             {% if media.trickId.id == trick.id %}
-                {{ media.pictures }}
+                {% include 'trick/_trick_cards.html.twig' %}
             {% endif %}
         {% endfor %}
-        {% include 'trick/_trick_cards.html.twig' %}
     {% endfor %}
+    </div>
 
     <a href="{{ path('app_trick_new') }}">Create new</a>
 {% endblock %}
