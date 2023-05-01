@@ -18,10 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
+    public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
+            'medias' => $mediaRepository->findAll()
         ]);
     }
 

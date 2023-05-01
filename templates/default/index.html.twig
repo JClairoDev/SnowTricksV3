@@ -15,13 +15,11 @@
                 <a href="#" class="close"></a>
                 <div class = 'nav'>
                     <ul class = 'nav_list'>
-
-                        <div class = 'nav_list_item'>
-                            <li><a href="#">GRAB</a></li>
-                        </div>
-                        <div class = 'nav_list_item'>
-                            <li><a href="#">FLIP</a></li>
-                        </div
+                        {% for category in categories  %}
+                            <div class = 'nav_list_item'>
+                                <li><a href="#">{{ category.name }}</a></li>
+                            </div>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

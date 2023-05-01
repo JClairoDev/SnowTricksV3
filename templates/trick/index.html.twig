@@ -33,5 +33,14 @@
         </tbody>
     </table>
 
+    {% for trick in tricks %}
+        {% for media in medias  %}
+            {% if media.trickId.id == trick.id %}
+                {{ media.pictures }}
+            {% endif %}
+        {% endfor %}
+        {% include 'trick/_trick_cards.html.twig' %}
+    {% endfor %}
+
     <a href="{{ path('app_trick_new') }}">Create new</a>
 {% endblock %}
