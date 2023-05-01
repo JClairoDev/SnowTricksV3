@@ -1,0 +1,6 @@
+{% for trick in tricks %}
+    {% if trick.categoryId.id == category.id %}
+        {{ trick.name }}
+    {% endif %}
+
+{% endfor %}

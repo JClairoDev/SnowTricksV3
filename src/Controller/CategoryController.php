@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Trick;
 use App\Repository\CategoryRepository;
 use App\Repository\TrickRepository;
@@ -24,14 +25,15 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/category/{id}', name: 'app_category_show_trick')]
-    public function showTricksByCategory(CategoryRepository $categoryRepository, TrickRepository $trickRepository): Response
+    public function showTricksByCategory(Category $category, CategoryRepository $categoryRepository, TrickRepository $trickRepository): Response
     {
         $categories=$categoryRepository->findAll();
         $tricks=$trickRepository->findAll();
-        return $this->render('category/index.html.twig', [
+        return $this->render('category/show_tricks_by_category.html.twig', [
             'controller_name' => 'CategoryController',
             'categories'=>$categories,
-            'tricks'=>$tricks
+            'tricks'=>$tricks,
+            'category'=>$category
         ]);
     }
 

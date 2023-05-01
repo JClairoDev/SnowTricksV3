@@ -1,5 +1,9 @@
 <article class="trick-card">
     <header class="trick-card-header">
+            {{ trick.name }}
             <img src="{{ asset('uploads/'~media.pictures) }}" alt="illustration du trick">
     </header>
+    <div class="trick-card-content">
+        <p>{{ trick.description }}</p>
+    </div>
 </article>

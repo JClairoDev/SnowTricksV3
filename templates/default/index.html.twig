@@ -16,9 +16,9 @@
                 <div class = 'nav'>
                     <ul class = 'nav_list'>
                         {% for category in categories  %}
-                            <div class = 'nav_list_item'>
-                                <li><a href="#">{{ category.name }}</a></li>
-                            </div>
+                            <li class = 'nav_list_item'>
+                                <a href="{{ path('app_category_show_trick',{'id': category.id })}}">{{ category.name }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
