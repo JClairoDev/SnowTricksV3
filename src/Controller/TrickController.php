@@ -92,9 +92,19 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
+            $medias=$mediaRepository->findAll();
+
+            foreach ($medias as $media){
+                if ($media->getTrickId()->getId()===$trick->getId()){
+                    $mediaRepository->remove($media);
+                }
+            }
+
+
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+
             $trickRepository->remove($trick, true);
         }
 
