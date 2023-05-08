@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Form\PhotoType;
 use App\Form\TrickType;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
@@ -33,43 +34,57 @@ class TrickController extends AbstractController
         //$userId=$this->getUser()->getUserIdentifier();
         $media=new Media();
         $trick = new Trick();
+        $formMedia=$this->createForm(PhotoType::class, $media);
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $trick->setUserId($this->getUser());
+            $trickRepository->save($trick, true);
+
             $video=$form->get('video')->getData();
-            $photo=$form->get('photo')->getData();
+            $photos=$form->get('media')->getData();
+
             //utilisation du service créé FileUploader pour l'enregistrement des medias
-            if ($photo) {
-                $fileName = $fileUploader->upload($photo);
-                $media->setPictures($fileName);
-            } else if ($form->get('removeImage')->getData()) {
-                unlink($this->getParameter('uploads_path') . '/' . $media->getPictures());
-                $media->setPictures(null);
+            foreach ($photos as $photo){
+                if ($photo) {
+                    $fileName = $fileUploader->upload($photo);
+                    $media->setPictures($fileName);
+                    $media->setVideo($video);
+                    $media->setTrickId($trick);
+                    $mediaRepository->save($media, true);
+                } else if ($form->get('removeImage')->getData()) {
+                    unlink($this->getParameter('uploads_path') . '/' . $media->getPictures());
+                    $media->setPictures(null);
+
+                }
             }
+
             //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
             //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
             $media->setVideo($video);
-            $trick->setUserId($this->getUser());
-            $trickRepository->save($trick, true);
-            $media->setTrickId($trick);
             $mediaRepository->save($media, true);
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('trick/new.html.twig', [
+        return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'media'=> $formMedia
         ]);
     }
 
     #[Route('/{id}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, MediaRepository $mediaRepository, TrickRepository $trickRepository): Response
     {
+        $medias=$mediaRepository->findAll();
+        $tricks=$trickRepository->findAll();
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'medias'=>$medias,
+            'tricks'=>$tricks
         ]);
     }
 
@@ -85,7 +100,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('trick/edit.html.twig', [
+        return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
         ]);

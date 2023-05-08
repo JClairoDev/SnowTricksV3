@@ -11,14 +11,6 @@
   flex-direction: column;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-  &:hover {
-    .trick-card-header {
-      img {
-        transform: scale(1.1);
-      }
-    }
-  }
-
   .trick-card-header {
     position: relative;
     overflow: hidden;
@@ -26,7 +18,8 @@
 
     img {
       width: 100%;
-      transition: transform 0.5s;
+      height: 300px;
+      object-fit: cover;
     }
 
     .header-info {
