@@ -34,11 +34,9 @@
     </table>
     <div class="list-tricks">
     {% for trick in tricks %}
-        {% for media in medias  %}
-            {% if media.trickId.id == trick.id %}
+
                 {% include 'trick/_trick_cards.html.twig' %}
-            {% endif %}
-        {% endfor %}
+
     {% endfor %}
     </div>
 

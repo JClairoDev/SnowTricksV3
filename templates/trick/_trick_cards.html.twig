@@ -1,11 +1,18 @@
-<article class="trick-card">
-    <header class="trick-card-header">
-            {{ trick.name }}
-        <a href="{{ path('app_trick_show', {'id': trick.id}) }}">
-            <img src="{{ asset('uploads/'~media.pictures) }}" alt="illustration du trick">
-        </a>
-    </header>
-    <div class="trick-card-content">
-        <p>{{ trick.description }}</p>
-    </div>
-</article>
+
+    {% set break = false %} {#// variable permettant l'arrêt de la boucle lorsqu'un media est trouvé pour éviter l'affichage intempestif#}
+    {% for media in medias %}
+            {% if media.trickId.id == trick.id and break == false %}
+                <article class="trick-card">
+                     <header class="trick-card-header">
+                      {{ trick.name }}
+                             <a href="{{ path('app_trick_show', {'id': trick.id}) }}">
+                                  <img src="{{ asset('uploads/'~media.pictures) }}" alt="illustration du trick">
+                             </a>
+                    </header>
+                 <div class="trick-card-content">
+                     <p>{{ trick.description }}</p>
+                 </div>
+                </article>
+            {% set break = true %}
+            {% endif %}
+    {% endfor %}

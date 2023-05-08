@@ -32,9 +32,9 @@ class TrickController extends AbstractController
     {
 
         //$userId=$this->getUser()->getUserIdentifier();
-        $media=new Media();
+
         $trick = new Trick();
-        $formMedia=$this->createForm(PhotoType::class, $media);
+        //$formMedia=$this->createForm(PhotoType::class, $media);
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -49,22 +49,24 @@ class TrickController extends AbstractController
             //utilisation du service créé FileUploader pour l'enregistrement des medias
             foreach ($photos as $photo){
                 if ($photo) {
+                    $media=new Media();
                     $fileName = $fileUploader->upload($photo);
                     $media->setPictures($fileName);
                     $media->setVideo($video);
                     $media->setTrickId($trick);
                     $mediaRepository->save($media, true);
                 } else if ($form->get('removeImage')->getData()) {
+                    $media=new Media();
                     unlink($this->getParameter('uploads_path') . '/' . $media->getPictures());
                     $media->setPictures(null);
 
                 }
+
             }
 
             //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
             //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
-            $media->setVideo($video);
-            $mediaRepository->save($media, true);
+
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -72,7 +74,6 @@ class TrickController extends AbstractController
         return $this->render('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
-            'media'=> $formMedia
         ]);
     }
 
