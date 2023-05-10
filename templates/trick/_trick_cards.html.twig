@@ -8,16 +8,17 @@
                                   <img src="{{ asset('uploads/'~media.pictures) }}" alt="illustration du trick">
                              </a>
                     </header>
-                    {{ trick.name }}
-                    <div class="trick-card-content">
-                     Rider : {{ trick.userId.name }}
-                        {{ include('trick/_delete_form.html.twig') }}
-                     <a href="{{ path('app_trick_edit',{'id': trick.id}) }}">
-                         <i class="btn fa fa-pencil" aria-hidden="true"></i>
-                     </a>
-
-                 </div>
+                         <div class="trick-card-content">
+                                Trick : {{ trick.name }} </br>
+                                Rider : {{ trick.userId.name }}
+                            {% if app.user %}
+                                {{ include('trick/_delete_form.html.twig') }}
+                                    <a href="{{ path('app_trick_edit',{'id': trick.id}) }}">
+                                        <button class="btn"><i class="btn fa fa-pencil" aria-hidden="true"></i></button>
+                                    </a>
+                            {% endif %}
+                        </div>
                 </article>
-            {% set break = true %}
+                {% set break = true %}
             {% endif %}
     {% endfor %}

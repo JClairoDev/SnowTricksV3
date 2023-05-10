@@ -1,29 +1,25 @@
+
 .show-index-trick{
-
-  background-image: url("/public/uploads/photo page acceuil snowtricks.jpg");
-  background-size: contain;
-  background-repeat: repeat;
-
     i.fa.fa-plus-circle{
       font-size: xxx-large;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: green;
+      color: #77966D;
     }
 
     i.fa-pencil{
-      color: #0c5460;
+      color: #0D1321;
     }
 
     a{
-    text-decoration: none;
-    color: #77966D;
+      text-decoration: none;
     }
 }
 
 .align-cross{
+  padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,18 +3,19 @@
 {% block title %}Trick index{% endblock %}
 
 {% block body %}
+    <h1>Listes des tricks</h1>
+
     <main class="show-index-trick">
-        <div class="align-cross">
-        <a href="{{ path('app_trick_new') }}">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        </a>
+         <div class="align-cross">
+            <a href="{{ path('app_trick_new') }}">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </a>
         </div>
-    <div class="list-tricks">
 
-    {% for trick in tricks %}
+        <div class="list-tricks">
+            {% for trick in tricks %}
                 {% include 'trick/_trick_cards.html.twig' %}
-    {% endfor %}
-    </div>
-
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}
