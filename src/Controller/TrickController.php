@@ -23,7 +23,7 @@ class TrickController extends AbstractController
     {
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
-            'medias' => $mediaRepository->findAll()
+            'medias' => $mediaRepository->findAll(),
         ]);
     }
 
