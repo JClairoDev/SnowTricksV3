@@ -12,7 +12,6 @@ use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
-use Cassandra\Date;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,14 +89,14 @@ class TrickController extends AbstractController
         $commentaries=$commentaryRepository->findAll();
 
         //Gestion de la partie commentaires
-        //On instancie le nouveau commentaire
 
+        //On instancie le nouveau commentaire
         $comment = new Commentary();
+        //On instancie la date
         $date = new \DateTime();
 
-        //on génère le commentaire
         //attention de bien configurer la méthode 'POST' avant de soumettre un formulaire
-
+        //on génère le commentaire
         $commentaryForm = $this->createForm(CommentaryType::class, $comment);
         $commentaryForm->handleRequest($request);
         $commentary=$commentaryForm->get('commentary')->getData();
@@ -109,7 +108,6 @@ class TrickController extends AbstractController
             $comment->setUserId($trick->getUserId());
             $commentaryRepository->save($comment,true);
         }
-
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,

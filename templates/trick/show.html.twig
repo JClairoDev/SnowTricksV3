@@ -5,7 +5,15 @@
 {% block body %}
 
     {{ form(commentaryForm) }}
-
+<div class="wrap">
+    {% for commentary in commentaries %}
+        {% if trick.id==commentary.trickId.id %}
+            <div class="show-trick">
+                {{ commentary }}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
     <a href="{{ path('app_trick_index') }}">back to list</a>
 
     <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
