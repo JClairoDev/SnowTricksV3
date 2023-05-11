@@ -1,5 +1,6 @@
 
 .show-index-trick{
+
     i.fa.fa-plus-circle{
       font-size: xxx-large;
       text-align: center;
@@ -23,4 +24,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.background{
+  background-image: url("/public/uploads/photo page acceuil snowtricks.jpg");
+  background-size: contain;
+background-repeat: no-repeat;
 }

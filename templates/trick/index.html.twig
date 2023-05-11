@@ -3,7 +3,11 @@
 {% block title %}Trick index{% endblock %}
 
 {% block body %}
+
     <h1>Listes des tricks</h1>
+
+    <div class="background">
+
 
     <main class="show-index-trick">
          <div class="align-cross">
@@ -12,10 +16,12 @@
             </a>
         </div>
 
-        <div class="list-tricks">
-            {% for trick in tricks %}
-                {% include 'trick/_trick_cards.html.twig' %}
-            {% endfor %}
-        </div>
+
     </main>
+    <div class="list-tricks">
+        {% for trick in tricks %}
+            {% include 'trick/_trick_cards.html.twig' %}
+        {% endfor %}
+    </div>
+    </div>
 {% endblock %}

@@ -4,6 +4,8 @@
 
 {% block body %}
 
+    {{ form(commentaryForm) }}
+
     <a href="{{ path('app_trick_index') }}">back to list</a>
 
     <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
