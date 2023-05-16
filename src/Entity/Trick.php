@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -17,9 +18,21 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 4,
+        max: 25,
+        minMessage: 'Le nom du trick doit comporter au minimum 4 caractères',
+        maxMessage: 'Le nom du trick doit comporter au maximum 25 caractères',
+    )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        min: 1000,
+        max: 2500,
+        minMessage: 'La description doit comporter au minimum 1000 caractères',
+        maxMessage: 'La description doit comporter au maximum 2500 caractères',
+    )]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]

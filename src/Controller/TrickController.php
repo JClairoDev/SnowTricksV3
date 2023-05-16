@@ -107,6 +107,9 @@ class TrickController extends AbstractController
             $comment->setTrickId($trick);
             $comment->setUserId($trick->getUserId());
             $commentaryRepository->save($comment,true);
+            //on redirige sur la même page avec l'id pour le rafraichissement du commentaire
+            return $this->redirectToRoute('app_trick_show', array('id'=>$trick->getId()));
+
         }
 
         return $this->render('trick/show.html.twig', [
@@ -136,7 +139,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
             $medias=$mediaRepository->findAll();

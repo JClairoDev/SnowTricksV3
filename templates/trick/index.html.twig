@@ -10,11 +10,13 @@
 
 
     <main class="show-index-trick">
-         <div class="align-cross">
-            <a href="{{ path('app_trick_new') }}">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-            </a>
-        </div>
+        {% if app.user %}
+            <div class="align-cross">
+                <a href="{{ path('app_trick_new') }}">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </a>
+            </div>
+        {% endif %}
 
 
     </main>
