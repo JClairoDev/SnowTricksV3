@@ -4,7 +4,7 @@
             {% if media.trickId.id == trick.id and break == false %}
                 <article class="trick-card">
                      <header class="trick-card-header">
-                             <a href="{{ path('app_trick_show', {'id': trick.id}) }}">
+                             <a href="{{ path('app_trick_show', {'slug': trick.slug}) }}">
                                   <img src="{{ asset('uploads/'~media.pictures) }}" alt="illustration du trick">
                              </a>
                     </header>

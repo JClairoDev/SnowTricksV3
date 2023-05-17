@@ -12,6 +12,7 @@ class LoginController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        $this->addFlash('success', 'Ton email a été validé!');
          if ($this->getUser()) {
              return $this->redirectToRoute('app_hompage');
          }

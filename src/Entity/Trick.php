@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -30,7 +31,7 @@ class Trick
     #[Assert\Length(
         min: 1000,
         max: 2500,
-        minMessage: 'La description doit comporter au minimum 1000 caractères',
+        minMessage: 'La description doit comporter au minimum 250 caractères',
         maxMessage: 'La description doit comporter au maximum 2500 caractères',
     )]
     private ?string $description = null;
@@ -51,6 +52,26 @@ class Trick
 
     #[ORM\OneToMany(mappedBy: 'trickId', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(type: "string", length: 255)]
+    #[Gedmo\Slug(fields: ['name'] )]
+    private string $slug;
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
 
     public function __construct()
     {
@@ -206,6 +227,5 @@ class Trick
 
         return $this;
     }
-
 
 }

@@ -1,9 +1,8 @@
 .footer{
   background-color: #2274A5;
   margin-top: 3rem;
-  display: inline-grid;
-  grid-template-columns: repeat(5, minmax(100px, 1fr));
-  gap: 1rem;
+  display: flex;
+  justify-content: space-between;
 
   .list-setting {
     display: flex;

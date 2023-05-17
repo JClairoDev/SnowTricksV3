@@ -4,8 +4,13 @@
 
 {% block body %}
 <section class="selectCategory">
-
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success message-flash">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container">
+
         <h1>
             <a href="#menu">SNOW TRICKS</a>
         </h1>
@@ -15,6 +20,9 @@
                 <a href="#" class="close"></a>
                 <div class = 'nav'>
                     <ul class = 'nav_list'>
+                        <li class="nav_list_item">
+                            <a href="{{ path('app_trick_index') }}">Tout les tricks</a>
+                        </li>
                         {% for category in categories  %}
                             <li class = 'nav_list_item'>
                                 <a href="{{ path('app_category_show_trick',{'id': category.id })}}">{{ category.name }}</a>
@@ -27,9 +35,5 @@
     </div>
 
 </section>
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+
 {% endblock %}

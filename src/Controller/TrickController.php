@@ -40,6 +40,7 @@ class TrickController extends AbstractController
 
             if (($this->getUser()->getRoles())!=null) {
                 $trick = new Trick();
+
                 $form = $this->createForm(TrickType::class, $trick);
                 $form->handleRequest($request);
 
@@ -66,6 +67,8 @@ class TrickController extends AbstractController
                             $media->setPictures(null);
                         }
                     }
+
+
                     //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
                     //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
                     //return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
@@ -81,7 +84,7 @@ class TrickController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET','POST'])]
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET','POST'])]
     public function show(Trick $trick, MediaRepository $mediaRepository, TrickRepository $trickRepository,CommentaryRepository $commentaryRepository, Request $request): Response
     {
         $medias=$mediaRepository->findAll();

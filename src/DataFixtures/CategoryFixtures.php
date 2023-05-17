@@ -23,6 +23,16 @@ class CategoryFixtures extends Fixture
         $manager->persist($flip);
         $this->addReference('flip',$flip);
 
+        $spin=new Category();
+        $spin->setName('spin');
+        $manager->persist($spin);
+        $this->addReference('spin',$spin);
+
+        $butters=new Category();
+        $butters->setName('butters');
+        $manager->persist($butters);
+        $this->addReference('butters',$butters);
+
         $manager->flush();
     }
 }

@@ -1,7 +1,8 @@
 
 
 <div class="header">
-    <img src="{{ asset('uploads/LogoMakr-8DWPud.png') }}" alt="logo du site">
+    <a href="{{ path('app_hompage') }}"><img src="{{ asset('uploads/LogoMakr-8DWPud.png') }}" alt="logo du site"></a>
+
     <div>
         {% if app.user %}
         <a href="{{ path('app_logout') }}">LOGOUT</a>
