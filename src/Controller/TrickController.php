@@ -25,7 +25,7 @@ class TrickController extends AbstractController
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository, UserRepository $userRepository): Response
     {
-
+        //Envoie des données constituant la vue de l'index
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
             'medias' => $mediaRepository->findAll(),
@@ -67,11 +67,9 @@ class TrickController extends AbstractController
                             $media->setPictures(null);
                         }
                     }
-
-
                     //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
                     //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
-                    //return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
                 }
                 return $this->render('trick/new.html.twig', [
                     'trick' => $trick,
@@ -111,7 +109,7 @@ class TrickController extends AbstractController
             $comment->setUserId($trick->getUserId());
             $commentaryRepository->save($comment,true);
             //on redirige sur la même page avec l'id pour le rafraichissement du commentaire
-            return $this->redirectToRoute('app_trick_show', array('id'=>$trick->getId()));
+            return $this->redirectToRoute('app_trick_show', array('slug'=>$trick->getSlug()));
 
         }
 
@@ -127,15 +125,17 @@ class TrickController extends AbstractController
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
+
+        // création du formulaire
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
+        //validation du formulaire et sauvegarde du trick
         if ($form->isSubmitted() && $form->isValid()) {
             $trickRepository->save($trick, true);
-
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        //Affichage du formulaire (création de la vue)
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
@@ -143,14 +143,28 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
+    public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository, CommentaryRepository $commentaryRepository): Response
     {
-            $medias=$mediaRepository->findAll();
-            foreach ($medias as $media){
-                if ($media->getTrickId()->getId()===$trick->getId()){
-                    $mediaRepository->remove($media);
-                }
+        //suppression des commentaires associés au trick
+
+        $comments=$commentaryRepository->findAll();
+        foreach ($comments as $comment){
+            if ($comment->getTrickId()->getId()===$trick->getId()){
+                $commentaryRepository->remove($comment);
             }
+        }
+
+        //suppression des medias associés au trick
+
+        $medias=$mediaRepository->findAll();
+        foreach ($medias as $media){
+            if ($media->getTrickId()->getId()===$trick->getId()){
+                $mediaRepository->remove($media);
+            }
+        }
+
+        //suppression du trick avec protection Token CSRF
+
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
 
             $trickRepository->remove($trick, true);
