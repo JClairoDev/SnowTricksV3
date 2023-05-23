@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Trick;
 use App\Repository\CategoryRepository;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,15 +26,17 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/category/{id}', name: 'app_category_show_trick')]
-    public function showTricksByCategory(Category $category, CategoryRepository $categoryRepository, TrickRepository $trickRepository): Response
+    public function showTricksByCategory(Category $category, CategoryRepository $categoryRepository, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
+        $medias=$mediaRepository->findAll();
         $categories=$categoryRepository->findAll();
         $tricks=$trickRepository->findAll();
         return $this->render('category/show_tricks_by_category.html.twig', [
             'controller_name' => 'CategoryController',
             'categories'=>$categories,
             'tricks'=>$tricks,
-            'category'=>$category
+            'category'=>$category,
+            'medias'=>$medias
         ]);
     }
 
