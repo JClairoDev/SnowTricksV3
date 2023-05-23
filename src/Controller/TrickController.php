@@ -40,6 +40,7 @@ class TrickController extends AbstractController
     {
         // Récupération des Users
         $users = $userRepository->findAll();
+
         // L'utilisateur est-il connecté ?
             if ($this->isGranted('ROLE_USER')) {
                 $trick = new Trick();
@@ -56,6 +57,7 @@ class TrickController extends AbstractController
                     $photos=$form->get('media')->getData();
 
                     //utilisation du service créé FileUploader pour l'enregistrement des medias
+
                     foreach ($photos as $photo){
                         if ($photo) {
                             $media=new Media();
@@ -100,21 +102,26 @@ class TrickController extends AbstractController
 
         //On instancie le nouveau commentaire
         $comment = new Commentary();
+
         //On instancie la date
         $date = new \DateTime();
 
         //attention de bien configurer la méthode 'POST' avant de soumettre un formulaire
         //on génère le commentaire
+
         $commentaryForm = $this->createForm(CommentaryType::class, $comment);
         $commentaryForm->handleRequest($request);
         $commentary=$commentaryForm->get('commentary')->getData();
+
         //traitement du formulaire
+
         if ($commentaryForm->isSubmitted() && $commentaryForm->isValid()){
             $comment->setCommentary($commentary);
             $comment->setDate($date);
             $comment->setTrickId($trick);
             $comment->setUserId($trick->getUserId());
             $commentaryRepository->save($comment,true);
+
             //on redirige sur la même page avec l'id pour le rafraichissement du commentaire
             return $this->redirectToRoute('app_trick_show', array('slug'=>$trick->getSlug()));
 
@@ -132,19 +139,29 @@ class TrickController extends AbstractController
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository, FileUploader $fileUploader): Response
     {
+        //Récupération des médias associés au trick
         $actualMedias= $mediaRepository->findBy(['trickId'=>$trick->getId()]);
 
         // création du formulaire
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+
+        //Récupération des données du formulaire
         $video=$form->get('video')->getData();
         $photos=$form->get('media')->getData();
-        //validation du formulaire et sauvegarde du trick
+
+        //validation du formulaire et sauvegarde du trick et des médias + fileUpload
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //sauvegarde de la modification du trick
             $trickRepository->save($trick, true);
+
+            //Boucle de suppression des médias attachés
             foreach($actualMedias as $media){
                 $mediaRepository->remove($media);
             }
+
+            //Set up des données de l'entité média
             foreach ($photos as $photo){
                 if ($photo) {
                     $media=new Media();
@@ -162,6 +179,7 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
+
         //Affichage du formulaire (création de la vue)
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
@@ -172,7 +190,7 @@ class TrickController extends AbstractController
     #[Route('/{id}/delete', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository, CommentaryRepository $commentaryRepository): Response
     {
-        //suppression des commentaires associés au trick
+        //Suppression des commentaires associés au trick
 
         $comments=$commentaryRepository->findAll();
         foreach ($comments as $comment){
@@ -181,7 +199,7 @@ class TrickController extends AbstractController
             }
         }
 
-        //suppression des medias associés au trick
+        //Suppression des medias associés au trick
 
         $medias=$mediaRepository->findAll();
         foreach ($medias as $media){
@@ -190,7 +208,7 @@ class TrickController extends AbstractController
             }
         }
 
-        //suppression du trick avec protection Token CSRF
+        //Suppression du trick avec protection Token CSRF
 
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
 

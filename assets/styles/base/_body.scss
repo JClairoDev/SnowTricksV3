@@ -1,5 +1,5 @@
 body{
-  background-color: #77966D;
+  background-image: url("/public/uploads/background01.jpg");
   background-size: cover;
   background-repeat: repeat;
 }
@@ -17,4 +17,8 @@ body{
 .container{
   width: 100%;
   margin: 0 auto;
+}
+
+.selectCategory{
+  height: 800px;
 }

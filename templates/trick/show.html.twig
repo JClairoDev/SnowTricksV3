@@ -16,8 +16,13 @@
     {% endfor %}
 </div>
     <a href="{{ path('app_trick_index') }}">back to list</a>
+    {% if app.user %}
+        {% if trick.userId==app.user %}
+            <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
 
-    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
+            {{ include('trick/_delete_form.html.twig') }}
+        {% endif %}
 
-    {{ include('trick/_delete_form.html.twig') }}
+    {% endif %}
+
 {% endblock %}
