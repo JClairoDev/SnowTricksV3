@@ -12,6 +12,7 @@ use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,8 @@ class TrickController extends AbstractController
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository, UserRepository $userRepository): Response
     {
-        //Envoie des données constituant la vue de l'index
+        //Envoi des données constituant la vue de l'index
+
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
             'medias' => $mediaRepository->findAll(),
@@ -36,9 +38,10 @@ class TrickController extends AbstractController
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TrickRepository $trickRepository, MediaRepository $mediaRepository, UserRepository $userRepository, FileUploader $fileUploader): Response
     {
-                $users = $userRepository->findAll();
-
-            if (($this->getUser()->getRoles())!=null) {
+        // Récupération des Users
+        $users = $userRepository->findAll();
+        // L'utilisateur est-il connecté ?
+            if ($this->isGranted('ROLE_USER')) {
                 $trick = new Trick();
 
                 $form = $this->createForm(TrickType::class, $trick);
@@ -67,8 +70,12 @@ class TrickController extends AbstractController
                             $media->setPictures(null);
                         }
                     }
-                    //bien faire attention à l'ordre dans lequel on envoi les données dans le code par exemple
+
+                    $this->addFlash('success', 'Ton trick à été correctement ajouté!');
+
+                    //Faire attention à l'ordre dans lequel on envoie les données dans le code par exemple
                     //pour setIdTrick il faut envoyer le $trick dans le Repo avant tout.
+
                     return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
                 }
                 return $this->render('trick/new.html.twig', [
@@ -123,16 +130,36 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
+    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository, FileUploader $fileUploader): Response
     {
+        $actualMedias= $mediaRepository->findBy(['trickId'=>$trick->getId()]);
 
         // création du formulaire
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
+        $video=$form->get('video')->getData();
+        $photos=$form->get('media')->getData();
         //validation du formulaire et sauvegarde du trick
         if ($form->isSubmitted() && $form->isValid()) {
             $trickRepository->save($trick, true);
+            foreach($actualMedias as $media){
+                $mediaRepository->remove($media);
+            }
+            foreach ($photos as $photo){
+                if ($photo) {
+                    $media=new Media();
+                    $fileName = $fileUploader->upload($photo);
+                    $media->setPictures($fileName);
+                    $media->setVideo($video);
+                    $media->setTrickId($trick);
+                    $mediaRepository->save($media, true);
+                } else if ($form->get('removeImage')->getData()) {
+                    $media=new Media();
+                    unlink($this->getParameter('uploads_path') . '/' . $media->getPictures());
+                    $media->setPictures(null);
+                }
+            }
+
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
         //Affichage du formulaire (création de la vue)
