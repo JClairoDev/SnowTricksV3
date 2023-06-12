@@ -3,14 +3,14 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <div class="your-class">
+   {# <div class="your-class">
     {% for media in medias  %}
         <div class="slick-slide">
             <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
         </div>
 
     {% endfor %}
-    </div>
+    </div>#}
 
     {% if app.user %}
         {{ form(commentaryForm) }}
