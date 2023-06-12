@@ -3,20 +3,29 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <div class="your-class">
-    {% for media in medias  %}
-        {% if trick.id is same as media.trickId.id %}
-            <div class="slick-slide">
-                <div class="wrap-slider">
-                    <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-    </div>}
+    <div class="wrap">
+        <h1>{{ trick.name }}</h1>
+        Catégorie : <h2>{{ trick.categoryId.name }}</h2>
+        <div class="your-class">
+            {% for media in medias  %}
+                {% if trick.id is same as media.trickId.id %}
+                    <div class="slick-slide">
+                        <div class="wrap-slider">
+                            <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        Description : <h3>{{ trick.description }}</h3>
+        <div class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/v1QL0FzU-60" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
 
     {% if app.user %}
-        {{ form(commentaryForm) }}
         {% if trick.userId==app.user %}
             <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
                 <button class="btn">
@@ -28,16 +37,22 @@
         {% endif %}
     {% endif %}
 
+    <a href="{{ path('app_trick_index') }}">
+        <button class="btn">Retour</button>
+    </a>
+
+    {% if app.user %}
+        {{ form(commentaryForm) }}
+    {% endif %}
+
     <div class="wrap">
         {% for commentary in commentaries %}
             {% if trick.id==commentary.trickId.id %}
                 <div class="show-trick">
-                 {{ commentary }}
+                    {{ commentary }}
                 </div>
             {% endif %}
         {% endfor %}
     </div>
-    <a href="{{ path('app_trick_index') }}">back to list</a>
-
 
 {% endblock %}

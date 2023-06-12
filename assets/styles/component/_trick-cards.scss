@@ -7,7 +7,7 @@
 .btn{
   width: 100px;
   height: 30px;
-  background-color: black;
+  background-color: #0D132195;
   color: white;
   border: none;
   border-radius: 10px;
@@ -35,12 +35,14 @@
 
   .trick-card-content {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     padding: 1rem;
     background-color: #77966D;
-
     p {
-      text-align: justify;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
     }
   }
 }

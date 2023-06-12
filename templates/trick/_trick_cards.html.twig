@@ -8,8 +8,8 @@
              </a>
     </header>
          <div class="trick-card-content">
-                Trick : {{ trick.name }} </br>
-                Rider : {{ trick.userId.name }}
+             <p>Trick : {{ trick.name }}</p>
+             <p>Rider : {{ trick.userId.name }}</p>
             {% if app.user %}
                 {% if trick.userId==app.user %}
                     {{ include('trick/_delete_form.html.twig') }}
