@@ -12,7 +12,15 @@ import './styles/style.scss';
 import './bootstrap';
 
 
-//faire le carroussel ici
+import 'jquery';
+import 'slick-carousel';
+const $= require('jquery');
 
-
+$(document).ready(function(){
+    $('.your-class').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 3
+});
+});
 

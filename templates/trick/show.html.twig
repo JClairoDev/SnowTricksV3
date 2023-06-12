@@ -3,26 +3,34 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
+    <div class="your-class">
+    {% for media in medias  %}
+        <div class="slick-slide">
+            <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
+        </div>
 
-
-    {{ form(commentaryForm) }}
-<div class="wrap">
-    {% for commentary in commentaries %}
-        {% if trick.id==commentary.trickId.id %}
-            <div class="show-trick">
-                {{ commentary }}
-            </div>
-        {% endif %}
     {% endfor %}
-</div>
-    <a href="{{ path('app_trick_index') }}">back to list</a>
+    </div>
+
     {% if app.user %}
+        {{ form(commentaryForm) }}
         {% if trick.userId==app.user %}
             <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
 
             {{ include('trick/_delete_form.html.twig') }}
         {% endif %}
-
     {% endif %}
+
+    <div class="wrap">
+        {% for commentary in commentaries %}
+            {% if trick.id==commentary.trickId.id %}
+                <div class="show-trick">
+                 {{ commentary }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <a href="{{ path('app_trick_index') }}">back to list</a>
+
 
 {% endblock %}

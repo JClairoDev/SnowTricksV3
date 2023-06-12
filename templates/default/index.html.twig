@@ -18,16 +18,16 @@
         <div class="popover" id="menu">
             <div class = 'content'>
                 <a href="#" class="close"></a>
-                <div class = 'nav'>
-                    <ul class = 'nav_list'>
-                        <li class="nav_list_item">
-                            <a href="{{ path('app_trick_index') }}">Tout les tricks</a>
-                        </li>
-                        {% for category in categories  %}
+                     <div class = 'nav'>
+                        <ul class = 'nav_list'>
+                             <li class="nav_list_item">
+                                 <a href="{{ path('app_trick_index') }}">Tout les tricks</a>
+                             </li>
+                             {% for category in categories  %}
                             <li class = 'nav_list_item'>
                                 <a href="{{ path('app_category_show_trick',{'id': category.id })}}">{{ category.name }}</a>
                             </li>
-                        {% endfor %}
+                             {% endfor %}
                     </ul>
                 </div>
             </div>
