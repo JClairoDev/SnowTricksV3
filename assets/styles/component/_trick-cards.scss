@@ -4,6 +4,15 @@
   gap: 2rem;
 }
 
+.no-trick{
+  display: flex;
+  justify-content: center;
+    p{
+      font-size: xxx-large;
+      width: max-content;
+    }
+}
+
 .btn{
   width: 100px;
   height: 30px;
