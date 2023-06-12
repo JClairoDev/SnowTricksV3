@@ -3,19 +3,26 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-   {# <div class="your-class">
+    <div class="your-class">
     {% for media in medias  %}
-        <div class="slick-slide">
-            <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
-        </div>
-
+        {% if trick.id is same as media.trickId.id %}
+            <div class="slick-slide">
+                <div class="wrap-slider">
+                    <img src="{{ asset('uploads/'~media.pictures) }}" alt="carousel">
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
-    </div>#}
+    </div>}
 
     {% if app.user %}
         {{ form(commentaryForm) }}
         {% if trick.userId==app.user %}
-            <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
+            <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
+                <button class="btn">
+                    Modifier
+                </button>
+            </a>
 
             {{ include('trick/_delete_form.html.twig') }}
         {% endif %}

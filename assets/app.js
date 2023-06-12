@@ -19,8 +19,8 @@ const $= require('jquery');
 $(document).ready(function(){
     $('.your-class').slick({
         infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 5
+        slidesToShow: 1,
+        slidesToScroll: 1
 });
 });
 
