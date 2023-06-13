@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+
 use App\Entity\Trick;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,25 +14,27 @@ class TrickFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        $user=new User();
+
+
+    /*    $user=new User();
         $user->setName('julien');
         $user->setPseudo('trickster');
         $user->setLastname('clairo');
         $user->setAvatar('photo1.jpg');
         $user->setEmail('trickster.julien@gmail.com');
         $user->setPassword('trickster');
-        $manager->persist($user);
+        $manager->persist($user);*/
 
-        $grab=$this->getReference('grab');
-
-        $indy=new Trick();
-        $indy->setName('indy');
-        $indy->setCategoryId($grab);
-        $indy->setUserId($user);
-        $indy->setDescription('description dela figure indygrab');
-        $manager->persist($indy);
-
-
+//        $grab=$this->getReference('grab');
+//
+//        $indy=new Trick();
+//        $indy->setName('indy');
+//        $indy->setCategoryId($grab);
+//        $indy->setUserId($user);
+//        $indy->setDescription('description dela figure indygrab');
+//        $manager->persist($indy);
+//
+//
         $manager->flush();
     }
 }
