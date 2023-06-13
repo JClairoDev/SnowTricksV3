@@ -29,11 +29,12 @@
   border: 2px solid black;
   margin-right: 1rem;
   margin-left: 1rem;
+  background-color: #00000095;
 
   .trick-card-header {
     position: relative;
     overflow: hidden;
-    background-color: #77966D;
+    background-color: #00000095;
 
     img {
       width: 100%;
@@ -48,10 +49,11 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: #77966D;
+
     p {
       text-align: center;
       font-family: 'Inter', sans-serif;
+      color: white;
     }
   }
 }

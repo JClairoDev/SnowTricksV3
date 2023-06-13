@@ -25,28 +25,33 @@
             <embed width="420" height="315" src="{{ media.video }}"></embed>
         </div>
     </div>
+    <div class="button-nav">
+        {% if app.user %}
+            {% if trick.userId==app.user %}
+                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
+                    <button class="btn">
+                        Modifier
+                    </button>
+                </a>
 
-    {% if app.user %}
-        {% if trick.userId==app.user %}
-            <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
-                <button class="btn">
-                    Modifier
-                </button>
-            </a>
-
-            {{ include('trick/_delete_form.html.twig') }}
+                {{ include('trick/_delete_form.html.twig') }}
+            {% endif %}
         {% endif %}
-    {% endif %}
 
-    <a href="{{ path('app_trick_index') }}">
-        <button class="btn">Retour</button>
-    </a>
+        <a href="{{ path('app_trick_index') }}">
+            <button class="btn">Retour</button>
+        </a>
+    </div>
 
-    {% if app.user %}
-        {{ form(commentaryForm) }}
-    {% endif %}
+
+
 
     <div class="wrap">
+
+        {% if app.user %}
+            {{ form(commentaryForm) }}
+        {% endif %}
+
         {% for commentary in commentaries %}
             {% if trick.id==commentary.trickId.id %}
                 <div class="show-trick">
