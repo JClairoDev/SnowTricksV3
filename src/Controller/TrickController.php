@@ -12,7 +12,7 @@ use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
-use http\Client\Curl\User;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,11 +91,21 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_trick_show', methods: ['GET','POST'])]
-    public function show(Trick $trick, MediaRepository $mediaRepository, TrickRepository $trickRepository,CommentaryRepository $commentaryRepository, Request $request): Response
+    public function show(Trick $trick, MediaRepository $mediaRepository, TrickRepository $trickRepository,CommentaryRepository $commentaryRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $medias=$mediaRepository->findAll();
         $tricks=$trickRepository->findAll();
-        $commentaries=$commentaryRepository->findAll();
+
+
+
+        //Pagination
+
+        $pagination = $paginator->paginate(
+            $commentaryRepository->paginationQuery(),
+            $request->query->get('page',1),
+            4
+        );
+
 
         //Gestion de la partie commentaires
 
@@ -130,8 +140,8 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'medias'=>$medias,
             'tricks'=>$tricks,
-            'commentaries'=>$commentaries,
-            'commentaryForm'=>$commentaryForm->createView()
+            'commentaryForm'=>$commentaryForm->createView(),
+            'pagination'=>$pagination
         ]);
     }
 

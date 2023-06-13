@@ -52,13 +52,14 @@
             {{ form(commentaryForm) }}
         {% endif %}
 
-        {% for commentary in commentaries %}
+        {% for commentary in pagination %}
             {% if trick.id==commentary.trickId.id %}
                 <div class="show-trick">
                     {{ commentary }}
                 </div>
             {% endif %}
         {% endfor %}
+        {{ knp_pagination_render(pagination) }}
     </div>
 
 {% endblock %}
